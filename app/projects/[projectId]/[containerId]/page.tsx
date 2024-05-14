@@ -24,7 +24,7 @@ const ContainerPage = async ({
         containerId={params.containerId}
       />
       <ProjectSideBar />
-      <Droppable id={params.containerId}>
+      <Droppable id={params.containerId} type={OwnerTypeMap.CONTAINER}>
         <div className='relative'>
           {items?.map((item) => <ItemItem key={item.id} item={item} />)}
         </div>

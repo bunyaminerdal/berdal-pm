@@ -3,10 +3,10 @@ import { ItemType } from '@/types';
 import { Item } from '@prisma/client';
 import React from 'react';
 import TextItemTextArea from './TextItemTextArea';
-import { getTextById } from '@/data/project/items';
+import { getTextItemById } from '@/data/project/items';
 
 const TextItem = async ({ item }: { item: Item }) => {
-  const text = await getTextById(item.itemId);
+  const text = await getTextItemById(item.itemId);
   const positionX = +(text?.positionX || '0');
   const positionY = +(text?.positionY || '0');
   const width = +(text?.width || '100');

@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { ItemType, ItemTypeMap, OwnerType, OwnerTypeMap } from '@/types';
+import { OwnerType, OwnerTypeMap } from '@/types';
 import { getProjectById } from './project';
 
 export const getItemsByOwnerId = async (
@@ -44,12 +44,22 @@ export const getContainerItemById = async (id: string) => {
   }
 };
 
-export const getTextById = async (id: string) => {
+export const getTextItemById = async (id: string) => {
   try {
     const text = await db.text.findUnique({
       where: { id },
     });
     return text;
+  } catch {
+    return null;
+  }
+};
+export const getListItemById = async (id: string) => {
+  try {
+    const list = await db.list.findUnique({
+      where: { id },
+    });
+    return list;
   } catch {
     return null;
   }

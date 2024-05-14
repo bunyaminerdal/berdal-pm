@@ -27,32 +27,40 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
   });
   const sensors = useSensors(mouseSensor, touchSensor);
   async function handleDragEnd(event: DragEndEvent) {
+    console.log('🚀 ~ handleDragEnd ~ event:', event);
     if (event.over) {
+      const ownerId = containerId?.toString() || projectId?.toString();
+      const ownerType = event.over.data.current?.type as OwnerTypeMap;
       if (event.over.id === 'layout') return;
       if (event.active.data.current?.id as string) {
-        // fake update
-        const item = document.getElementById(event.active.data.current?.id);
-        const style = item?.getAttribute('style');
-        const top = style?.split(';')[1].split(':')[1].trim().split('px')[0];
-        const left = style?.split(';')[2].split(':')[1].trim().split('px')[0];
-        item?.setAttribute(
-          'style',
-          `position: absolute; top: ${
-            +(top as string) + event.delta.y
-          }px; left: ${+(left as string) + event.delta.x}px;`
-        );
+        if (
+          event.over.data.current?.allowableItemTypes?.includes(
+            event.active.data.current?.type as ItemType
+          )
+        ) {
+          console.log('oldu');
+          //TODO: change owner
+        } else {
+          // fake update
+          const item = document.getElementById(event.active.data.current?.id);
+          const style = item?.getAttribute('style');
+          const top = style?.split(';')[1].split(':')[1].trim().split('px')[0];
+          const left = style?.split(';')[2].split(':')[1].trim().split('px')[0];
+          item?.setAttribute(
+            'style',
+            `position: absolute; top: ${
+              +(top as string) + event.delta.y
+            }px; left: ${+(left as string) + event.delta.x}px;`
+          );
 
-        await updateItemPos(
-          event.active.data.current?.id as string,
-          event.active.data.current?.type as ItemType,
-          (event.delta.x as number).toString(),
-          (event.delta.y as number).toString()
-        );
+          await updateItemPos(
+            event.active.data.current?.id as string,
+            event.active.data.current?.type as ItemType,
+            (event.delta.x as number).toString(),
+            (event.delta.y as number).toString()
+          );
+        }
       } else {
-        const ownerId = containerId?.toString() || projectId?.toString();
-        const ownerType = containerId
-          ? OwnerTypeMap.CONTAINER
-          : OwnerTypeMap.PROJECT;
         const prototype = document.getElementById(
           `${event.active.data.current?.type}-prototype`
         );

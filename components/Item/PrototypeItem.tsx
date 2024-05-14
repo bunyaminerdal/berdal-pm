@@ -1,7 +1,5 @@
 import { ItemType, ItemTypeMap } from '@/types';
 import React from 'react';
-import ContainerItemPrototype from './items/Container/ContainerItemPrototype';
-import TextItemPrototype from './items/Text/TextItemPrototype';
 import { Draggable } from '../dnd/Draggable';
 import { Button } from '../ui/button';
 import { FaSpinner } from 'react-icons/fa';

@@ -15,10 +15,12 @@ enum UserRole {
 enum ItemType {
   CONTAINER
   TEXT
+  LIST
 }
 enum OwnerType {
   CONTAINER
   PROJECT
+  LIST
 }
 model User {
   id            String    @id @default(cuid())
@@ -119,10 +121,21 @@ model Text {
   height String
 }
 
+model List {
+  id String @id @default(cuid())
+  title String
+  positionX String
+  positionY String
+  width String
+  height String
+  itemIds String[]
+}
+
 model Item {
   id String @id @default(cuid())
   itemId String
   ownerId String
   ownerType OwnerType
   itemType ItemType
+  order Int?
 }

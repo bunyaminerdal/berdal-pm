@@ -1,6 +1,6 @@
 'use server';
 import { db } from '@/lib/db';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import {  revalidateTag } from 'next/cache';
 import { ItemType, ItemTypeMap, OwnerType, OwnerTypeMap } from '@/types';
 import mutateProjects from './project';
 
@@ -9,7 +9,8 @@ export const createItem = async (
   ownerId: string,
   ownerType: OwnerType,
   positionX: string = '0',
-  positionY: string = '0'
+  positionY: string = '0',
+  order: number = 0
 ) => {
   switch (ownerType) {
     case OwnerTypeMap.PROJECT:
@@ -23,6 +24,11 @@ export const createItem = async (
         where: { id: ownerId },
       });
       if (!container) return { error: 'container not found!' };
+    case OwnerTypeMap.LIST:
+      const list = await db.list.findUnique({
+        where: { id: ownerId },
+      });
+      if (!list) return { error: 'list not found!' };
     default:
       break;
   }
@@ -92,6 +98,7 @@ export const createItem = async (
           itemId: text.id,
           ownerId,
           ownerType,
+          order,
         },
       });
       if (!textItem) return { error: 'item creation failed!' };
@@ -116,6 +123,79 @@ export const createItem = async (
             where: { id: ownerId },
             data: {
               itemIds: [...(container?.itemIds || []), textItem.id],
+            },
+          });
+          break;
+        case OwnerTypeMap.LIST:
+          const list = await db.list.findUnique({
+            where: { id: ownerId },
+          });
+          await db.list.update({
+            where: { id: ownerId },
+            data: {
+              itemIds: [...(list?.itemIds || []), textItem.id],
+            },
+          });
+          break;
+
+        default:
+          break;
+      }
+      break;
+
+    case ItemTypeMap.LIST:
+      const list = await db.list.create({
+        data: {
+          title: 'List',
+          positionX,
+          positionY,
+          width: '200',
+          height: '100',
+        },
+      });
+      if (!list) return { error: 'list creation failed!' };
+      const listItem = await db.item.create({
+        data: {
+          itemType: ItemTypeMap.LIST,
+          itemId: list.id,
+          ownerId,
+          ownerType,
+          order,
+        },
+      });
+      if (!listItem) return { error: 'item creation failed!' };
+      switch (ownerType) {
+        case OwnerTypeMap.PROJECT:
+          const project = await db.project.findUnique({
+            where: { id: ownerId },
+          });
+
+          await db.project.update({
+            where: { id: ownerId },
+            data: {
+              itemIds: [...(project?.itemIds || []), listItem.id],
+            },
+          });
+          break;
+        case OwnerTypeMap.CONTAINER:
+          const container = await db.container.findUnique({
+            where: { id: ownerId },
+          });
+          await db.container.update({
+            where: { id: ownerId },
+            data: {
+              itemIds: [...(container?.itemIds || []), listItem.id],
+            },
+          });
+          break;
+        case OwnerTypeMap.LIST:
+          const list = await db.list.findUnique({
+            where: { id: ownerId },
+          });
+          await db.list.update({
+            where: { id: ownerId },
+            data: {
+              itemIds: [...(list?.itemIds || []), listItem.id],
             },
           });
           break;
@@ -166,6 +246,19 @@ export const updateItemPos = async (
         },
       });
       break;
+    case ItemTypeMap.LIST:
+      const list = await db.list.findUnique({
+        where: { id },
+      });
+      if (!list) return { error: 'list not found!' };
+      await db.list.update({
+        where: { id },
+        data: {
+          positionX: (+list.positionX + +posX).toString(),
+          positionY: (+list.positionY + +posY).toString(),
+        },
+      });
+      break;
 
     default:
       break;
@@ -186,6 +279,19 @@ export const updateItemSize = async (
       });
       if (!text) return { error: 'text not found!' };
       await db.text.update({
+        where: { id },
+        data: {
+          width,
+          height,
+        },
+      });
+      break;
+    case ItemTypeMap.LIST:
+      const list = await db.list.findUnique({
+        where: { id },
+      });
+      if (!list) return { error: 'list not found!' };
+      await db.list.update({
         where: { id },
         data: {
           width,
