@@ -6,16 +6,20 @@ import usePrototypeClear from '@/hooks/usePrototypeClear';
 import { Button } from '@/components/ui/button';
 import { BsPlus } from 'react-icons/bs';
 import { Droppable } from '@/components/dnd/Droppable';
+import Sortable from '@/components/dnd/Sortable';
+import { Item } from '@prisma/client';
 
 const ListItemDrop = ({
   ownerId,
   listId,
   listTitle,
+  items,
   width = 100,
   height = 100,
 }: {
   ownerId: string;
   listId: string;
+  items: Item[];
   listTitle?: string;
   width?: number;
   height?: number;
@@ -96,7 +100,12 @@ const ListItemDrop = ({
         type={OwnerTypeMap.LIST}
         allowableItemTypes={[ItemTypeMap.TEXT]}
       >
-        <div className='relative'>asdf</div>
+        <Sortable
+          items={items
+            .map((i) => ({ ...i, order: i.order || 0 }))
+            .sort((a, b) => a.order - b.order)}
+          listId={listId}
+        />
       </Droppable>
       <Button
         size='icon'

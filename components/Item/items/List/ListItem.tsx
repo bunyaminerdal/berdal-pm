@@ -34,6 +34,7 @@ const ListItem = async ({ item }: { item: Item }) => {
           listTitle={list?.title || ''}
           width={width}
           height={height}
+          items={items || []}
         />
       </Draggable>
     </div>

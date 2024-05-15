@@ -1,6 +1,6 @@
 'use server';
 import { db } from '@/lib/db';
-import {  revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { ItemType, ItemTypeMap, OwnerType, OwnerTypeMap } from '@/types';
 import mutateProjects from './project';
 
@@ -264,6 +264,60 @@ export const updateItemPos = async (
       break;
   }
   mutateProjectItems(id);
+};
+
+export const updateOwner = async (
+  itemId: string,
+  newOwnerId: string,
+  newOwnerType: OwnerType
+) => {
+  if (!newOwnerId || !newOwnerType) return { error: 'new owner not found!' };
+  const item = await db.item.findFirst({
+    where: { itemId: itemId },
+  });
+  if (!item) return { error: 'item not found!' };
+  const oldOwnerId = item.ownerId;
+  const oldOwnerType = item.ownerType;
+  const oldOwner = await (
+    db[oldOwnerType?.toLowerCase() as any] as any
+  ).findFirst({
+    where: {
+      id: oldOwnerId,
+    },
+  });
+  const newOwner = await (
+    db[newOwnerType?.toLowerCase() as any] as any
+  ).findFirst({
+    where: {
+      id: newOwnerId,
+    },
+  });
+  if (!oldOwner || !oldOwnerType) return { error: 'old owner not found!' };
+  if (!newOwner) return { error: 'new owner not found!' };
+  await db.item.update({
+    where: { id: item.id },
+    data: {
+      ownerId: newOwnerId,
+      ownerType: newOwnerType,
+    },
+  });
+  await (
+    db[oldOwnerType?.toLowerCase() as any] as any
+  ).update({
+    where: { id: oldOwner.id },
+    data: {
+      itemIds:[...(oldOwner.itemIds as string[]).filter((id) => id !== item.id)],
+    },
+  });
+  await (
+    db[newOwnerType?.toLowerCase() as any] as any
+  ).update({
+    where: { id: newOwner.id },
+    data: {
+      itemIds:[...(newOwner.itemIds as string[]), item.id],
+    },
+  });
+
 };
 
 export const updateItemSize = async (

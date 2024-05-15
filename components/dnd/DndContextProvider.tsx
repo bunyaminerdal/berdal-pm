@@ -1,5 +1,5 @@
 'use client';
-import { createItem, updateItemPos } from '@/actions/item';
+import { createItem, updateItemPos, updateOwner } from '@/actions/item';
 import { ItemType, OwnerTypeMap } from '@/types';
 import {
   DndContext,
@@ -38,8 +38,14 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
             event.active.data.current?.type as ItemType
           )
         ) {
-          console.log('oldu');
-          //TODO: change owner
+          //TODO: if item dropped to outside of container, event.active data changes. handle that
+          console.log('change owner');
+          //TODO: DO FAKE UPDATE FOR ITEM WHICH OWNER CHANGED
+          updateOwner(
+            event.active.data.current?.id,
+            event.over.data.current.id,
+            event.over.data.current.type
+          );
         } else {
           // fake update
           const item = document.getElementById(event.active.data.current?.id);
