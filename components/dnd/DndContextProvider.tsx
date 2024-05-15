@@ -4,6 +4,7 @@ import { ItemType, OwnerTypeMap } from '@/types';
 import {
   DndContext,
   DragEndEvent,
+  DragOverlay,
   MouseSensor,
   TouchSensor,
   useSensor,
@@ -94,6 +95,7 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
   return (
     <DndContext onDragEnd={handleDragEnd} sensors={sensors} id='main-context'>
       {children}
+      <DragOverlay>asdfssdfg</DragOverlay>
     </DndContext>
   );
 };

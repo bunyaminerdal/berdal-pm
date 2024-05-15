@@ -16,6 +16,7 @@ export function SortableItem({ item }: { item: Item }) {
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       {/* <ItemItem item={item} /> */}
+      asdf
     </div>
   );
 }
