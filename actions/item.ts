@@ -24,6 +24,7 @@ export const createItem = async (
         where: { id: ownerId },
       });
       if (!container) return { error: 'container not found!' };
+      break;
     case OwnerTypeMap.LIST:
       const list = await db.list.findUnique({
         where: { id: ownerId },

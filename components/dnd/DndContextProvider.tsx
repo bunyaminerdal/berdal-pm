@@ -78,7 +78,7 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
           }px; left: ${+event.active.data.current?.posX + event.delta.x}px;`
         );
         prototype?.setAttribute('data-loading', `true`);
-        await createItem(
+        const res = await createItem(
           event.active.data.current?.type as ItemType,
           ownerId,
           ownerType,
@@ -89,6 +89,7 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
             (event.delta.y + event.active.data.current?.posY) as number
           ).toString()
         );
+        console.log('🚀 ~ handleDragEnd ~ create item:', res);
       }
     }
   }
