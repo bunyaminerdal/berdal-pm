@@ -30,13 +30,11 @@ import { GrClose } from 'react-icons/gr';
 import usePrototypeClear from '@/hooks/usePrototypeClear';
 
 const TextItemTextArea = ({
-  ownerId,
   textId,
   textContext,
   width = 100,
   height = 100,
 }: {
-  ownerId: string;
   textId: string;
   textContext?: string;
   width?: number;
@@ -81,7 +79,7 @@ const TextItemTextArea = ({
         );
       setIsMouseUp(false);
     }
-  }, [height, isMouseUp, ownerId, rect.height, rect.width, textId, width]);
+  }, [height, isMouseUp, rect.height, rect.width, textId, width]);
   const observer = useMemo(
     () =>
       typeof window !== 'undefined'

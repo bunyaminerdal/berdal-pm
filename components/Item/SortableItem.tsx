@@ -2,7 +2,8 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Item } from '@prisma/client';
-import ItemItem from '.';
+import ItemItem from './index';
+import dynamic from 'next/dynamic';
 
 export function SortableItem({ item }: { item: Item }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -12,11 +13,13 @@ export function SortableItem({ item }: { item: Item }) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-
+  const DynamicItemItem = dynamic(() => import('./index'), {
+    ssr: true,
+  });
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {/* <ItemItem item={item} /> */}
-      asdf
+      //TODO:use droppable instead of sort item
+      <DynamicItemItem item={item} />
     </div>
   );
 }
