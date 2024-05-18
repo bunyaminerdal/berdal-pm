@@ -4,7 +4,6 @@ import { ItemType, OwnerTypeMap } from '@/types';
 import {
   DndContext,
   DragEndEvent,
-  DragOverlay,
   MouseSensor,
   TouchSensor,
   useSensor,
@@ -51,15 +50,25 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
         } else {
           // fake update
           const item = document.getElementById(event.active.data.current?.id);
-          const style = item?.getAttribute('style');
-          const top = style?.split(';')[1].split(':')[1].trim().split('px')[0];
-          const left = style?.split(';')[2].split(':')[1].trim().split('px')[0];
-          item?.setAttribute(
-            'style',
-            `position: absolute; top: ${
-              +(top as string) + event.delta.y
-            }px; left: ${+(left as string) + event.delta.x}px;`
-          );
+          if (item) {
+            const style = item?.getAttribute('style');
+            const top = style
+              ?.split(';')[1]
+              .split(':')[1]
+              .trim()
+              .split('px')[0];
+            const left = style
+              ?.split(';')[2]
+              .split(':')[1]
+              .trim()
+              .split('px')[0];
+            item?.setAttribute(
+              'style',
+              `position: absolute; top: ${
+                +(top as string) + event.delta.y
+              }px; left: ${+(left as string) + event.delta.x}px;`
+            );
+          }
 
           await updateItemPos(
             event.active.data.current?.id as string,
@@ -97,7 +106,6 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
   return (
     <DndContext onDragEnd={handleDragEnd} sensors={sensors} id='main-context'>
       {children}
-      <DragOverlay>asdfssdfg</DragOverlay>
     </DndContext>
   );
 };

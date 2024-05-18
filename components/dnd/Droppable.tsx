@@ -27,11 +27,7 @@ export function Droppable({
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className='flex h-full w-full flex-col gap-2'
-    >
+    <div ref={setNodeRef} style={style} className=' flex-1 gap-2'>
       {children}
     </div>
   );

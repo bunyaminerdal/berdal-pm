@@ -87,17 +87,17 @@ const ListItemDrop = ({
       style={{
         width,
         height,
+        // overflow: 'auto',
         resize: 'both',
-        overflow: 'hidden',
         cursor: 'default',
       }}
       ref={ref}
-      className='group rounded-md border border-primary bg-transparent'
+      className='group flex flex-col rounded-md border border-primary'
       onMouseUp={() => {
         setIsMouseUp(true);
       }}
     >
-      <div className='z-0 border-b border-primary bg-transparent px-3 py-2 text-sm font-medium'>
+      <div className='h-10 border-b border-primary px-3 py-2 text-sm font-medium'>
         {listTitle}
       </div>
       <Droppable
