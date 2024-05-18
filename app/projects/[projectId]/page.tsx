@@ -3,7 +3,7 @@ import { Droppable } from '@/components/dnd/Droppable';
 import ProjectMainBar from '@/components/project/ProjectMainBar';
 import ProjectSideBar from '@/components/project/ProjectSideBar';
 import { getItemsByOwnerId } from '@/data/project/items';
-import { OwnerTypeMap } from '@/types';
+import { ItemTypeMap, OwnerTypeMap } from '@/types';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
@@ -15,7 +15,11 @@ const ProjectPage = async ({ params }: { params: { projectId: string } }) => {
     <>
       <ProjectMainBar projectId={params.projectId} containerId={''} />
       <ProjectSideBar />
-      <Droppable id={params.projectId} type={OwnerTypeMap.PROJECT}>
+      <Droppable
+        id={params.projectId}
+        type={OwnerTypeMap.PROJECT}
+        allowableItemTypes={[ItemTypeMap.TEXT]}
+      >
         <div className='relative'>
           {items?.map((item) => <ItemItem key={item.id} item={item} />)}
         </div>

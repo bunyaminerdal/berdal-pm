@@ -4,6 +4,8 @@ import { Item } from '@prisma/client';
 import React from 'react';
 import { getItemsByOwnerId, getListItemById } from '@/data/project/items';
 import ListItemDrop from './ListItemDrop';
+import Sortable from '@/components/dnd/Sortable';
+import ItemItem from '../..';
 
 const ListItem = async ({ item }: { item: Item }) => {
   const list = await getListItemById(item.itemId);
@@ -34,8 +36,9 @@ const ListItem = async ({ item }: { item: Item }) => {
           listTitle={list?.title || ''}
           width={width}
           height={height}
-          items={items || []}
-        />
+        >
+          {items?.map((i) => <ItemItem item={i} key={i.itemId} />)}
+        </ListItemDrop>
       </Draggable>
     </div>
   );

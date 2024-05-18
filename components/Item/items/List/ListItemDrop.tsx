@@ -1,7 +1,13 @@
 'use client';
 import { updateItemSize } from '@/actions/item';
 import { ItemTypeMap, OwnerTypeMap } from '@/types';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import usePrototypeClear from '@/hooks/usePrototypeClear';
 import { Button } from '@/components/ui/button';
 import { BsPlus } from 'react-icons/bs';
@@ -10,20 +16,19 @@ import Sortable from '@/components/dnd/Sortable';
 import { Item } from '@prisma/client';
 
 const ListItemDrop = ({
+  children,
   ownerId,
   listId,
   listTitle,
-  items,
   width = 100,
   height = 100,
-}: {
+}: PropsWithChildren<{
   ownerId: string;
   listId: string;
-  items: Item[];
   listTitle?: string;
   width?: number;
   height?: number;
-}) => {
+}>) => {
   usePrototypeClear('LIST-prototype');
 
   const ref = useRef<HTMLDivElement>(null);
@@ -100,12 +105,7 @@ const ListItemDrop = ({
         type={OwnerTypeMap.LIST}
         allowableItemTypes={[ItemTypeMap.TEXT]}
       >
-        <Sortable
-          items={items
-            .map((i) => ({ ...i, order: i.order || 0 }))
-            .sort((a, b) => a.order - b.order)}
-          listId={listId}
-        />
+        {children}
       </Droppable>
       <Button
         size='icon'

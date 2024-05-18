@@ -37,7 +37,8 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
         if (
           event.over.data.current?.allowableItemTypes?.includes(
             event.active.data.current?.type as ItemType
-          )
+          ) &&
+          ownerId !== event.over.data.current?.id
         ) {
           //TODO: if item dropped to outside of container, event.active data changes. handle that
           console.log('change owner');

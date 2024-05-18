@@ -1,5 +1,5 @@
 import { Draggable } from '@/components/dnd/Draggable';
-import { ItemType } from '@/types';
+import { ItemType, OwnerTypeMap } from '@/types';
 import { Item } from '@prisma/client';
 import React from 'react';
 import TextItemTextArea from './TextItemTextArea';
@@ -14,11 +14,15 @@ const TextItem = async ({ item }: { item: Item }) => {
   return (
     <div
       id={item.itemId}
-      style={{
-        position: 'absolute',
-        top: `${positionY}px` || 0,
-        left: `${positionX}px` || 0,
-      }}
+      style={
+        item.ownerType === OwnerTypeMap.LIST
+          ? {}
+          : {
+              position: 'absolute',
+              top: `${positionY}px` || 0,
+              left: `${positionX}px` || 0,
+            }
+      }
     >
       <Draggable
         id={item.itemId}
@@ -27,7 +31,6 @@ const TextItem = async ({ item }: { item: Item }) => {
         ownerId={item.ownerId}
       >
         <TextItemTextArea
-          ownerId={item.ownerId}
           textId={item.itemId}
           textContext={text?.context}
           width={width}

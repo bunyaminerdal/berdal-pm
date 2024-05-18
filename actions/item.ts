@@ -295,13 +295,14 @@ export const updateOwner = async (
   });
   if (!oldOwner || !oldOwnerType) return { error: 'old owner not found!' };
   if (!newOwner) return { error: 'new owner not found!' };
-  await db.item.update({
+const updatedItem=  await db.item.update({
     where: { id: item.id },
     data: {
       ownerId: newOwnerId,
       ownerType: newOwnerType,
     },
   });
+  console.log("🚀 ~ updatedItem:", updatedItem)
   await (
     db[oldOwnerType?.toLowerCase() as any] as any
   ).update({

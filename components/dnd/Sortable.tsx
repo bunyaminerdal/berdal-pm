@@ -14,9 +14,11 @@ const Sortable = ({ items, listId }: { items: Item[]; listId: string }) => {
       //   strategy={verticalListSortingStrategy}
       id={listId}
     >
-      {items.map((item) => (
-        <SortableItem key={item.id} item={item} />
-      ))}
+      {items.map(
+        (item) =>
+          // <SortableItem key={item.id} item={item} />
+          item.itemId
+      )}
     </SortableContext>
   );
 };
