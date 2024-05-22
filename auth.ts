@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { type Adapter } from '@auth/core/adapters';
+// import { type Adapter } from '@auth/core/adapters';
 
 import { db } from '@/lib/db';
 import authConfig from '@/auth.config';
@@ -9,9 +9,9 @@ import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation
 import { getAccountByUserId } from '@/data/account';
 import { UserRole } from '@prisma/client';
 
-const adapter: Adapter = {
-  ...PrismaAdapter(db),
-};
+// const adapter: Adapter = {
+//   ...PrismaAdapter(db),
+// };
 
 export const {
   handlers: { GET, POST },
@@ -20,7 +20,7 @@ export const {
   signOut,
   update,
 } = NextAuth({
-  adapter,
+  // adapter,
   pages: {
     signIn: '/auth/login',
     error: '/auth/error',

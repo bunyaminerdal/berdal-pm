@@ -302,7 +302,6 @@ const updatedItem=  await db.item.update({
       ownerType: newOwnerType,
     },
   });
-  console.log("🚀 ~ updatedItem:", updatedItem)
   await (
     db[oldOwnerType?.toLowerCase() as any] as any
   ).update({
@@ -319,7 +318,7 @@ const updatedItem=  await db.item.update({
       itemIds:[...(newOwner.itemIds as string[]), item.id],
     },
   });
-
+  mutateProjectItems(itemId);
 };
 
 export const updateItemSize = async (
