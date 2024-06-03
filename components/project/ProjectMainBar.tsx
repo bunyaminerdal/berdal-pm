@@ -1,7 +1,6 @@
-import React from 'react';
-import BackButton from './BackButton';
-import { OwnerTypeMap } from '@/types';
 import { getOwnerByTypeAndId, getParentByChildId } from '@/data/project/items';
+import { OwnerTypeMap } from '@/types';
+import BackButton from './BackButton';
 
 const ProjectMainBar = async ({
   containerId,

@@ -10,7 +10,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { useParams } from 'next/navigation';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 const DndContextProvider = ({ children }: PropsWithChildren) => {
   const { projectId, containerId } = useParams();

@@ -2,7 +2,6 @@ import { Draggable } from '@/components/dnd/Draggable';
 import { getContainerItemById } from '@/data/project/items';
 import { ItemType } from '@/types';
 import { Item } from '@prisma/client';
-import React from 'react';
 import ContainerItemButton from './ContainerItemButton';
 
 const ContainerItem = async ({ item }: { item: Item }) => {

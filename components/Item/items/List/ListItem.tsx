@@ -1,11 +1,9 @@
 import { Draggable } from '@/components/dnd/Draggable';
+import { getItemsByOwnerId, getListItemById } from '@/data/project/items';
 import { ItemType, OwnerTypeMap } from '@/types';
 import { Item } from '@prisma/client';
-import React from 'react';
-import { getItemsByOwnerId, getListItemById } from '@/data/project/items';
-import ListItemDrop from './ListItemDrop';
-import Sortable from '@/components/dnd/Sortable';
 import ItemItem from '../..';
+import ListItemDrop from './ListItemDrop';
 
 const ListItem = async ({ item }: { item: Item }) => {
   const list = await getListItemById(item.itemId);

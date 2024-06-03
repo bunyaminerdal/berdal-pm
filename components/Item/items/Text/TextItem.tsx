@@ -1,9 +1,8 @@
 import { Draggable } from '@/components/dnd/Draggable';
+import { getTextItemById } from '@/data/project/items';
 import { ItemType, OwnerTypeMap } from '@/types';
 import { Item } from '@prisma/client';
-import React from 'react';
 import TextItemTextArea from './TextItemTextArea';
-import { getTextItemById } from '@/data/project/items';
 
 const TextItem = async ({ item }: { item: Item }) => {
   const text = await getTextItemById(item.itemId);

@@ -1,12 +1,12 @@
 'use client';
-import React, { useTransition } from 'react';
+import { useTransition } from 'react';
 
 import { FiTrash2 } from 'react-icons/fi';
 
-import { Button } from '../ui/button';
-import { ItemType, OwnerType } from '@/types';
-import { cn } from '@/lib/utils';
 import { deleteItem } from '@/actions/item';
+import { cn } from '@/lib/utils';
+import { ItemType, OwnerType } from '@/types';
+import { Button } from '../ui/button';
 
 const DeleteButton = ({
   itemId,

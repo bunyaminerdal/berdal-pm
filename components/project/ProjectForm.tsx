@@ -3,28 +3,22 @@ import { ProjectType } from './ProjectCard';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTransition, useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useTransition, useState } from 'react';
 
-import { Switch } from '@/components/ui/switch';
-import { ProjectSchema, SettingsSchema } from '@/schemas';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { ProjectSchema } from '@/schemas';
 import { Button } from '@/components/ui/button';
-import { settings } from '@/actions/settings';
 import {
   Form,
   FormField,
   FormControl,
   FormItem,
   FormLabel,
-  FormDescription,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { FormError } from '@/components/form-error';
 import { FormSuccess } from '@/components/form-success';
-import { useRouter } from 'next/navigation';
 import { Textarea } from '../ui/textarea';
 import mutateProjects, {
   createProject,
@@ -92,12 +86,12 @@ const ProjectForm = ({ project }: { project?: ProjectType }) => {
           <FormField
             control={form.control}
             name='name'
-            render={({ field }) => (
+            render={({ field: { ...rest } }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
-                    {...field}
+                    {...rest}
                     placeholder='John Doe'
                     disabled={isPending}
                     autoComplete='none'
@@ -111,12 +105,12 @@ const ProjectForm = ({ project }: { project?: ProjectType }) => {
           <FormField
             control={form.control}
             name='description'
-            render={({ field }) => (
+            render={({ field: { ...rest } }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    {...field}
+                    {...rest}
                     placeholder='Enter description here...'
                     disabled={isPending}
                     autoComplete='none'

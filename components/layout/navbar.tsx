@@ -1,16 +1,14 @@
 'use client';
 
-import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { ModeToggle } from '@/components/ui/mode-toggle';
 import { Button } from '@/components/ui/button';
-import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { UserButton } from '../auth/user-button';
-import { FaFolder, FaHome } from 'react-icons/fa';
-import { RiMailSendFill } from 'react-icons/ri';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React, { useState } from 'react';
+import { FaFolder, FaHome } from 'react-icons/fa';
+import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
+import { UserButton } from '../auth/user-button';
 
 const MenuItems = () => {
   return <div></div>;
@@ -25,8 +23,8 @@ const HamburgerMenuItems = ({
   const pathname = usePathname();
 
   return (
-    <div className=' flex h-full w-full flex-col justify-between align-middle md:flex-row'>
-      <div className='block md:flex '>
+    <div className='flex h-full w-full flex-col justify-between align-middle md:flex-row'>
+      <div className='block md:flex'>
         <Button
           variant={
             pathname === '/' && !isNavbar
@@ -38,7 +36,7 @@ const HamburgerMenuItems = ({
           className={cn(
             'm-1 flex flex-grow md:rounded-none',
             pathname === '/' && isNavbar
-              ? 'border-b-4 border-primary-foreground '
+              ? 'border-b-4 border-primary-foreground'
               : ''
           )}
           asChild
@@ -75,7 +73,7 @@ const HamburgerMenuItems = ({
       <div className='flex flex-col md:flex-row'>
         <UserButton setOpen={setOpen} className='m-1 rounded-md shadow' />
         <ModeToggle
-          className=' m-1 rounded-md shadow'
+          className='m-1 rounded-md shadow'
           size={isNavbar ? 'icon' : 'default'}
         />
       </div>
@@ -93,13 +91,13 @@ const Sidebar = () => {
         <HamburgerMenuItems isNavbar />
       </div>
       <div className='flex h-12 w-full items-center justify-between border p-4 md:hidden'>
-        <p className=' flex-shrink-0 self-center p-2 font-semibold'>
+        <p className='flex-shrink-0 self-center p-2 font-semibold'>
           Bünyamin Erdal
         </p>
         <Button
           variant='ghost'
           size='icon'
-          className='p-1 '
+          className='p-1'
           onClick={() => setOpen(open === 'open' ? 'closed' : 'open')}
           name='hamburger-menu-button'
           title='Menu'

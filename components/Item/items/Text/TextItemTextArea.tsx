@@ -1,33 +1,24 @@
 'use client';
 import { updateItemSize, updateTextContext } from '@/actions/item';
-import * as z from 'zod';
-import { Textarea } from '@/components/ui/textarea';
-import { ItemTypeMap } from '@/types';
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-  useTransition,
-} from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Form,
-  FormField,
   FormControl,
+  FormField,
   FormItem,
-  FormLabel,
-  FormDescription,
   FormMessage,
 } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
-import { TextSchema } from '@/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import usePrototypeClear from '@/hooks/usePrototypeClear';
 import { cn } from '@/lib/utils';
+import { TextSchema } from '@/schemas';
+import { ItemTypeMap } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa';
 import { GrClose } from 'react-icons/gr';
-import usePrototypeClear from '@/hooks/usePrototypeClear';
+import * as z from 'zod';
 
 const TextItemTextArea = ({
   textId,

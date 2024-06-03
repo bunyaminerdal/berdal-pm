@@ -1,19 +1,11 @@
 'use client';
 import { updateItemSize } from '@/actions/item';
-import { ItemTypeMap, OwnerTypeMap } from '@/types';
-import React, {
-  PropsWithChildren,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import usePrototypeClear from '@/hooks/usePrototypeClear';
-import { Button } from '@/components/ui/button';
-import { BsPlus } from 'react-icons/bs';
 import { Droppable } from '@/components/dnd/Droppable';
-import Sortable from '@/components/dnd/Sortable';
-import { Item } from '@prisma/client';
+import { Button } from '@/components/ui/button';
+import usePrototypeClear from '@/hooks/usePrototypeClear';
+import { ItemTypeMap, OwnerTypeMap } from '@/types';
+import { PropsWithChildren, useEffect, useMemo, useRef, useState } from 'react';
+import { BsPlus } from 'react-icons/bs';
 
 const ListItemDrop = ({
   children,

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import DndContextProvider from '../dnd/DndContextProvider';
 
 const ProjectLayout = ({ children }: PropsWithChildren) => {

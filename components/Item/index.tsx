@@ -1,9 +1,8 @@
 import { ItemTypeMap } from '@/types';
 import { Item } from '@prisma/client';
-import React from 'react';
 import ContainerItem from './items/Container/ContainerItem';
-import TextItem from './items/Text/TextItem';
 import ListItem from './items/List/ListItem';
+import TextItem from './items/Text/TextItem';
 
 const ItemItem = async ({ item }: { item: Item }) => {
   console.log('🚀 ~ ItemItem ~ item:', item);

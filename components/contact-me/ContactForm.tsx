@@ -1,11 +1,12 @@
 'use client';
+import { ContactMeSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ContactMeSchema } from '@/schemas';
-import { currentUser } from '@/lib/auth';
 
-import { Input } from '@/components/ui/input';
+import { FormError } from '@/components/form-error';
+import { FormSuccess } from '@/components/form-success';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -14,15 +15,12 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { FormError } from '@/components/form-error';
-import { FormSuccess } from '@/components/form-success';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
+import { contactMail } from '@/actions/contact-mail';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useState, useTransition } from 'react';
-import { Card } from '../ui/card';
-import { contactMail } from '@/actions/contact-mail';
 
 const ContactForm = () => {
   const user = useCurrentUser();

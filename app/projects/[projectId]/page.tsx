@@ -5,7 +5,6 @@ import ProjectSideBar from '@/components/project/ProjectSideBar';
 import { getItemsByOwnerId } from '@/data/project/items';
 import { ItemTypeMap, OwnerTypeMap } from '@/types';
 import { redirect } from 'next/navigation';
-import React from 'react';
 
 const ProjectPage = async ({ params }: { params: { projectId: string } }) => {
   const items = await getItemsByOwnerId(params.projectId, OwnerTypeMap.PROJECT);

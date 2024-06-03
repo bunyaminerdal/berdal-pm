@@ -1,9 +1,9 @@
 'use server';
 
-import * as z from 'zod';
-
 import { db } from '@/lib/db';
 import { ProjectSchema } from '@/schemas';
+import { revalidateTag } from 'next/cache';
+import * as z from 'zod';
 
 export const createProject = async (values: z.infer<typeof ProjectSchema>) => {
   const validatedFields = ProjectSchema.safeParse(values);
@@ -46,8 +46,6 @@ export const updateProject = async (
 
   return { success: 'Project created successfully!' };
 };
-
-import { revalidateTag } from 'next/cache';
 
 export default async function mutateProjects() {
   revalidateTag('projects');

@@ -1,8 +1,6 @@
-import React from 'react';
-import { Droppable } from '../dnd/Droppable';
-import { ItemType, ItemTypeMap, OwnerTypeMap } from '@/types';
+import { ItemType, ItemTypeMap } from '@/types';
 import PrototypeItem from '../Item/PrototypeItem';
-import { getParentByChildId } from '@/data/project/items';
+import { Droppable } from '../dnd/Droppable';
 
 const ProjectSideBar = async () => {
   return (

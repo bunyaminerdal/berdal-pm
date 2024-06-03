@@ -1,8 +1,8 @@
 'use client';
 
-import React, { PropsWithChildren } from 'react';
-import { useDroppable } from '@dnd-kit/core';
 import { ItemType, OwnerType, OwnerTypeMap } from '@/types';
+import { useDroppable } from '@dnd-kit/core';
+import { PropsWithChildren } from 'react';
 
 export function Droppable({
   id,
@@ -27,7 +27,7 @@ export function Droppable({
   };
 
   return (
-    <div ref={setNodeRef} style={style} className=' flex-1 gap-2'>
+    <div ref={setNodeRef} style={style} className='flex-1 gap-2'>
       {children}
     </div>
   );

@@ -1,12 +1,12 @@
 'use client';
-import React, { PropsWithChildren, useRef } from 'react';
 import { useDraggable } from '@dnd-kit/core';
+import { PropsWithChildren, useRef } from 'react';
 import { GiMove } from 'react-icons/gi';
 
-import { ItemType } from '@/types';
-import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import { ItemType } from '@/types';
 import DeleteButton from '../project/DeleteButton';
+import { Button } from '../ui/button';
 
 export function Draggable({
   type,
