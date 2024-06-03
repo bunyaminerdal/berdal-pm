@@ -27,6 +27,7 @@ export function Draggable({
     data: {
       type,
       id,
+      ownerId,
       posX: itemRef.current?.offsetLeft,
       posY: itemRef.current?.offsetTop,
     },

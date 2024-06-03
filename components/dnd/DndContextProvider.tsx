@@ -27,7 +27,6 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
   });
   const sensors = useSensors(mouseSensor, touchSensor);
   async function handleDragEnd(event: DragEndEvent) {
-    console.log('🚀 ~ handleDragEnd ~ event:', event);
     if (event.over) {
       const ownerId = containerId?.toString() || projectId?.toString();
       const ownerType = event.over.data.current?.type as OwnerTypeMap;
@@ -37,10 +36,10 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
           event.over.data.current?.allowableItemTypes?.includes(
             event.active.data.current?.type as ItemType
           ) &&
-          ownerId !== event.over.data.current?.id
+          event.over.id !== event.active.data.current?.ownerId
         ) {
           //TODO: if item dropped to outside of container, event.active data changes. handle that
-          console.log('change owner');
+          // console.log('change owner');
           //TODO: DO FAKE UPDATE FOR ITEM WHICH OWNER CHANGED
           updateOwner(
             event.active.data.current?.id,
@@ -69,7 +68,6 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
               }px; left: ${+(left as string) + event.delta.x}px;`
             );
           }
-
           await updateItemPos(
             event.active.data.current?.id as string,
             event.active.data.current?.type as ItemType,
@@ -99,7 +97,6 @@ const DndContextProvider = ({ children }: PropsWithChildren) => {
             (event.delta.y + event.active.data.current?.posY) as number
           ).toString()
         );
-        console.log('🚀 ~ handleDragEnd ~ create item:', res);
       }
     }
   }
