@@ -1,8 +1,7 @@
-import { auth } from '@/auth';
+import SessionProviderBe from '@/components/auth/SessionProviderBe';
 import MainLayout from '@/components/layout/main-layout';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import type { Metadata } from 'next';
-import { SessionProvider } from 'next-auth/react';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -17,12 +16,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-
   return (
     <html lang='en' suppressHydrationWarning>
       <body className='antialiased'>
-        <SessionProvider session={session}>
+        <SessionProviderBe>
           <ThemeProvider
             attribute='class'
             defaultTheme='dark'
@@ -31,7 +28,7 @@ export default async function RootLayout({
           >
             <MainLayout>{children}</MainLayout>
           </ThemeProvider>
-        </SessionProvider>
+        </SessionProviderBe>
       </body>
     </html>
   );
