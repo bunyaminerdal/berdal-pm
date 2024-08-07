@@ -11,13 +11,11 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 export const currentUser = async () => {
   const session = await getServerSession(authOptions);
-
   return session?.user;
 };
 
 export const currentRole = async () => {
   const session = await getServerSession(authOptions);
-
   return session?.user?.role;
 };
 export const authOptions: NextAuthOptions = {
@@ -127,4 +125,5 @@ export const authOptions: NextAuthOptions = {
     },
   },
   session: { strategy: 'jwt' },
+  secret: process.env.NEXTAUTH_SECRET,
 };

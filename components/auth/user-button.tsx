@@ -1,6 +1,8 @@
-import { FaUser } from 'react-icons/fa';
 import { ExitIcon } from '@radix-ui/react-icons';
+import { FaUser } from 'react-icons/fa';
 
+import { LogoutButton } from '@/components/auth/logout-button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,24 +10,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { LogoutButton } from '@/components/auth/logout-button';
-import { Button } from '../ui/button';
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { useCurrentRole } from '@/hooks/useCurrentRole';
+import { ExtendedUser } from '@/next-auth';
 import { UserRole } from '@prisma/client';
+import Link from 'next/link';
+import { Button } from '../ui/button';
 
 export const UserButton = ({
+  user,
   setOpen,
   className,
 }: {
+  user: ExtendedUser;
   setOpen?: React.Dispatch<React.SetStateAction<'closed' | 'open'>>;
   className?: string;
 }) => {
-  const user = useCurrentUser();
-  const role = useCurrentRole();
+  const role = user?.role;
 
   return (
     <>

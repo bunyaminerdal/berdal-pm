@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { cn } from '@/lib/utils';
+import { ExtendedUser } from '@/next-auth';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
@@ -10,13 +11,12 @@ import { FaFolder, FaHome } from 'react-icons/fa';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 import { UserButton } from '../auth/user-button';
 
-const MenuItems = () => {
-  return <div></div>;
-};
 const HamburgerMenuItems = ({
   setOpen,
+  user,
   isNavbar = false,
 }: {
+  user: ExtendedUser;
   setOpen?: React.Dispatch<React.SetStateAction<'closed' | 'open'>>;
   isNavbar?: boolean;
 }) => {
@@ -71,7 +71,11 @@ const HamburgerMenuItems = ({
         </Button>
       </div>
       <div className='flex flex-col md:flex-row'>
-        <UserButton setOpen={setOpen} className='m-1 rounded-md shadow' />
+        <UserButton
+          setOpen={setOpen}
+          className='m-1 rounded-md shadow'
+          user={user}
+        />
         <ModeToggle
           className='m-1 rounded-md shadow'
           size={isNavbar ? 'icon' : 'default'}
@@ -80,7 +84,7 @@ const HamburgerMenuItems = ({
     </div>
   );
 };
-const Sidebar = () => {
+const Sidebar = ({ user }: { user: ExtendedUser }) => {
   const [open, setOpen] = useState<'closed' | 'open'>('closed');
   return (
     <div className='w-full bg-primary'>
@@ -88,7 +92,7 @@ const Sidebar = () => {
         <p className='flex-shrink-0 self-center p-2 font-semibold'>
           Bünyamin Erdal
         </p>
-        <HamburgerMenuItems isNavbar />
+        <HamburgerMenuItems isNavbar user={user} />
       </div>
       <div className='flex h-12 w-full items-center justify-between border p-4 md:hidden'>
         <p className='flex-shrink-0 self-center p-2 font-semibold'>
@@ -115,7 +119,7 @@ const Sidebar = () => {
           data-state={open}
           className='fixed inset-x-0 inset-y-12 z-50 h-full bg-background pb-12 transition ease-in-out data-[state=closed]:sr-only data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95'
         >
-          <HamburgerMenuItems setOpen={setOpen} />
+          <HamburgerMenuItems setOpen={setOpen} user={user} />
         </div>
       </div>
     </div>
