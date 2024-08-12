@@ -27,7 +27,11 @@ const ProjectCard = ({ project }: { project: ProjectType }) => {
           <div className='flex flex-col gap-2'>
             <div className='mx-5 flex justify-end gap-2 text-primary'>
               <ProjectDialog project={project} />
-              <DeleteButton itemId={project.id} type={OwnerTypeMap.PROJECT} />
+              <DeleteButton
+                itemId={project.id}
+                type={OwnerTypeMap.PROJECT}
+                ownerId={project.ownerId}
+              />
             </div>
           </div>
         </div>

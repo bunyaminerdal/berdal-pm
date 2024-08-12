@@ -5,12 +5,8 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { ProjectType } from './ProjectCard';
 
-import mutateProjects, {
-  createProject,
-  updateProject,
-} from '@/actions/project';
+import { createProject, updateProject } from '@/actions/project';
 import { FormError } from '@/components/form-error';
-import { FormSuccess } from '@/components/form-success';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -21,16 +17,23 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import useProjects from '@/hooks/swr/useProjects';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { ProjectSchema } from '@/schemas';
 import { DialogClose, DialogFooter } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
 
-const ProjectForm = ({ project }: { project?: ProjectType }) => {
+const ProjectForm = ({
+  setOpen,
+  project,
+}: {
+  project?: ProjectType;
+  setOpen: (value: boolean) => void;
+}) => {
   const isCreateMode = !project;
   const user = useCurrentUser();
+  const { mutate } = useProjects(user?.id!);
   const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof ProjectSchema>>({
@@ -52,8 +55,8 @@ const ProjectForm = ({ project }: { project?: ProjectType }) => {
             }
 
             if (data.success) {
-              setSuccess(data.success);
-              mutateProjects();
+              setOpen(false);
+              await mutate();
             }
           })
           .catch(() => setError('Something went wrong!'));
@@ -67,8 +70,8 @@ const ProjectForm = ({ project }: { project?: ProjectType }) => {
             }
 
             if (data.success) {
-              setSuccess(data.success);
-              mutateProjects();
+              setOpen(false);
+              await mutate();
             }
           })
           .catch(() => setError('Something went wrong!'));
@@ -123,7 +126,6 @@ const ProjectForm = ({ project }: { project?: ProjectType }) => {
           />
         </div>
         <FormError message={error} />
-        <FormSuccess message={success} />
         <DialogFooter className='md:justify-end'>
           <DialogClose asChild>
             <Button type='button' variant='secondary'>
