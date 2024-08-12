@@ -4,42 +4,29 @@ import {
   authRoutes,
   publicRoutes,
 } from '@/routes';
-import { cookies } from 'next/headers';
+import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
-  const myCookie = cookies();
-
-  let token: string | null = null;
-  if (myCookie.get('next-auth.session-token')) {
-    token = myCookie.get('next-auth.session-token')!.value;
-  }
-
-  const isLoggedIn = !!token;
-  // const isUserOAuth = session?.user?.isOAuth;
+  const isAuth = await isAuthenticated(request);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  // const isOAuthPreventedRoute = oAuthPreventedRoutes.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {
     return null;
   }
 
-  // if (isOAuthPreventedRoute && isUserOAuth) {
-  //   return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-  // }
-
   if (isAuthRoute) {
-    if (isLoggedIn) {
+    if (isAuth) {
       return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
     return null;
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
+  if (!isAuth && !isPublicRoute) {
     let callbackUrl = nextUrl.pathname;
     if (nextUrl.search) {
       callbackUrl += nextUrl.search;
@@ -58,4 +45,9 @@ export async function middleware(request: NextRequest) {
 // Optionally, don't invoke Middleware on some paths
 export const config = {
   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+};
+
+const isAuthenticated = async (request: NextRequest) => {
+  const token: any = await getToken({ req: request });
+  return !!token && Date.now() <= token.exp * 1000;
 };
