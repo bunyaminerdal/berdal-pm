@@ -10,9 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { UserRole } from '@/data/user';
 import { cn } from '@/lib/utils';
 import { ExtendedUser } from '@/next-auth';
-import { UserRole } from '@prisma/client';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 

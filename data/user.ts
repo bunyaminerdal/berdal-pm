@@ -19,3 +19,8 @@ export const getUserById = async (id: string) => {
     return null;
   }
 };
+
+export enum UserRole {
+  ADMIN,
+  USER
+}

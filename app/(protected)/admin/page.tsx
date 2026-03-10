@@ -5,7 +5,7 @@ import { RoleGate } from '@/components/auth/role-gate';
 import { FormSuccess } from '@/components/form-success';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { UserRole } from '@prisma/client';
+import { UserRole } from '@/data/user';
 import { toast } from 'sonner';
 
 const AdminPage = () => {
